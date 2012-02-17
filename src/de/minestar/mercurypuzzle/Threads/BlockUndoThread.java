@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import com.bukkit.gemo.utils.BlockUtils;
 import com.bukkit.gemo.utils.ChatUtils;
 
-import de.minestar.mercurypuzzle.Core.Core;
+import de.minestar.mercurypuzzle.Core.MercuryPuzzle;
 import de.minestar.mercurypuzzle.Core.Settings;
 import de.minestar.mercurypuzzle.Units.StructureBlock;
 
@@ -70,7 +70,7 @@ public class BlockUndoThread implements Runnable {
             if (counter >= blockList.size()) {
                 // UNDO QUEUED BLOCKS
                 BlockUndoThread thisThread = new BlockUndoThread(world, this.playerName, this.queuedBlocks, false);
-                thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
+                thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(MercuryPuzzle.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
 
                 // UPDATE PHYSICS
                 net.minecraft.server.World nativeWorld = ((CraftWorld) world).getHandle();
@@ -83,18 +83,18 @@ public class BlockUndoThread implements Runnable {
 
                 // CANCEL TASK & PRINT INFO
                 if (!firstUndo)
-                    Core.getInstance().getPlayerManager().removeRunningThread(this.playerName);
+                    MercuryPuzzle.getInstance().getPlayerManager().removeRunningThread(this.playerName);
 
                 Bukkit.getScheduler().cancelTask(this.TaskID);
                 if (thisPlayer != null) {
-                    ChatUtils.printSuccess(thisPlayer, Core.getInstance().getDescription().getName(), "Undo done!");
+                    ChatUtils.printSuccess(thisPlayer, MercuryPuzzle.getInstance().getDescription().getName(), "Undo done!");
                 }
                 break;
             }
         }
 
         if (thisPlayer != null) {
-            ChatUtils.printInfo(thisPlayer, Core.getInstance().getDescription().getName(), ChatColor.GRAY, counter + " blocks of " + this.blockList.size() + " undone.");
+            ChatUtils.printInfo(thisPlayer, MercuryPuzzle.getInstance().getDescription().getName(), ChatColor.GRAY, counter + " blocks of " + this.blockList.size() + " undone.");
         }
         thisBlock = null;
     }
