@@ -27,12 +27,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.minestar.mercurypuzzle.Listener.PlayerListener;
 import de.minestar.mercurypuzzle.Manager.PlayerManager;
 
-public class MercuryPuzzle extends JavaPlugin {
+public class Core extends JavaPlugin {
 
     private PlayerManager playerManager;
     private PlayerListener playerListener;
 
-    private static MercuryPuzzle instance;
+    private static Core instance;
 
     public void onDisable() {
         TextUtils.logInfo("Disabled!");
@@ -55,7 +55,7 @@ public class MercuryPuzzle extends JavaPlugin {
         TextUtils.logInfo("Version " + getDescription().getVersion() + " enabled!");
     }
 
-    public static MercuryPuzzle getInstance() {
+    public static Core getInstance() {
         return instance;
     }
 

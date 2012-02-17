@@ -52,9 +52,9 @@ public class cmdCopy extends Command {
             ChatUtils.printError(player, pluginName, "You are not allowed to use this command.");
             return;
         }
-        
+
         // CHECK FOR RUNNING THREAD
-        if(playerManager.hasRunningThread(player)) {
+        if (playerManager.hasRunningThread(player)) {
             ChatUtils.printError(player, pluginName, "You have a running thread. Please wait until it's finished.");
             return;
         }

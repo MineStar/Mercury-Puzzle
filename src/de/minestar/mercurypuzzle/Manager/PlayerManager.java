@@ -8,7 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import de.minestar.mercurypuzzle.Core.MercuryPuzzle;
+import de.minestar.mercurypuzzle.Core.Core;
 import de.minestar.mercurypuzzle.Core.Settings;
 import de.minestar.mercurypuzzle.Enums.EnumDirection;
 import de.minestar.mercurypuzzle.Threads.BlockUndoThread;
@@ -63,7 +63,7 @@ public class PlayerManager {
             return false;
         runningThreads.add(player.getName());
         BlockUndoThread thisThread = new BlockUndoThread(player, this.undoList.get(player.getName()));
-        thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(MercuryPuzzle.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
+        thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
         return true;
     }
 
