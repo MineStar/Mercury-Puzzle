@@ -52,7 +52,6 @@ public class BlockCreationThread implements Runnable {
         Core.getInstance().getPlayerManager().addUndo(this.playerName, this.undoBlocks);
     }
 
-    @Override
     public void run() {
         if (TaskID == -9999)
             return;

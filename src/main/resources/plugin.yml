@@ -1,0 +1,13 @@
+name: Mercury Puzzle
+main: de.minestar.mercurypuzzle.Core.Core
+version: 0.1
+commands:
+  ccopy:
+    description: Copys the current selection
+    usage: /ccopy
+  cpaste:
+    description: Pastes the current structure
+    usage: /cpaste
+  cundo:
+    description: Undo the last paste
+    usage: /cundo
