@@ -14,7 +14,7 @@ import com.bukkit.gemo.utils.ChatUtils;
 
 import de.minestar.mercurypuzzle.Core.Core;
 import de.minestar.mercurypuzzle.Core.Settings;
-import de.minestar.mercurypuzzle.Units.StructureBlock;
+import de.minestar.mercurypuzzle.Structure.StructureBlock;
 
 public class BlockUndoThread implements Runnable {
 
@@ -60,6 +60,9 @@ public class BlockUndoThread implements Runnable {
                 if (BlockUtils.isComplexBlock(thisBlock.getTypeID()) || !firstUndo) {
                     if (!firstUndo || thisBlock.getTypeID() != thisWorldBlock.getTypeId() || thisBlock.getSubID() != thisWorldBlock.getData() || BlockUtils.isComplexBlock(thisWorldBlock.getTypeId())) {
                         thisWorldBlock.setTypeIdAndData(thisBlock.getTypeID(), thisBlock.getSubID(), false);
+                        if (thisBlock.getExtraInformation() != null) {
+                            thisBlock.getExtraInformation().pasteInformation(thisWorldBlock);
+                        }
                     }
                 } else {
                     this.queuedBlocks.add(thisBlock);
@@ -68,8 +71,10 @@ public class BlockUndoThread implements Runnable {
             counter++;
             if (counter >= blockList.size()) {
                 // UNDO QUEUED BLOCKS
-                BlockUndoThread thisThread = new BlockUndoThread(world, this.playerName, this.queuedBlocks, false);
-                thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
+                if (firstUndo) {
+                    BlockUndoThread thisThread = new BlockUndoThread(world, this.playerName, this.queuedBlocks, false);
+                    thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
+                }
 
                 // UPDATE PHYSICS
                 net.minecraft.server.World nativeWorld = ((CraftWorld) world).getHandle();

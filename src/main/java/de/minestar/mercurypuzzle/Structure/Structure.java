@@ -1,4 +1,4 @@
-package de.minestar.mercurypuzzle.Units;
+package de.minestar.mercurypuzzle.Structure;
 
 import java.util.ArrayList;
 
@@ -17,31 +17,25 @@ public class Structure {
     private ArrayList<StructureBlock> BlockList;
     private Vector distanceVector, sizeVector;
 
-    public Structure(Location distance, Vector vector1, Vector vector2) {
+    public Structure(Location pastePoint, Vector vector1, Vector vector2) {
         Vector minVector = new Vector(Math.min(vector1.getBlockX(), vector2.getBlockX()), Math.min(vector1.getBlockY(), vector2.getBlockY()), Math.min(vector1.getBlockZ(), vector2.getBlockZ()));
         Vector maxVector = new Vector(Math.max(vector1.getBlockX(), vector2.getBlockX()), Math.max(vector1.getBlockY(), vector2.getBlockY()), Math.max(vector1.getBlockZ(), vector2.getBlockZ()));
 
         this.sizeVector = new Vector(maxVector.getBlockX() - minVector.getBlockX(), maxVector.getBlockY() - minVector.getBlockY(), maxVector.getBlockZ() - minVector.getBlockZ());
-        this.distanceVector = new Vector(distance.getBlockX() - minVector.getBlockX(), distance.getBlockY() - minVector.getBlockY(), distance.getBlockZ() - minVector.getBlockZ());
+        this.distanceVector = new Vector(pastePoint.getBlockX() - minVector.getBlockX(), pastePoint.getBlockY() - minVector.getBlockY(), pastePoint.getBlockZ() - minVector.getBlockZ());
 
         this.BlockList = new ArrayList<StructureBlock>();
-        World world = distance.getWorld();
-        int thisX = 0, thisY = 0, thisZ = 0;
+        World world = pastePoint.getWorld();
         for (int y = minVector.getBlockY(); y <= maxVector.getBlockY(); y++) {
-            thisX = 0;
             for (int x = minVector.getBlockX(); x <= maxVector.getBlockX(); x++) {
-                thisZ = 0;
                 for (int z = minVector.getBlockZ(); z <= maxVector.getBlockZ(); z++) {
-                    BlockList.add(new StructureBlock(thisX, thisY, thisZ, world.getBlockTypeIdAt(x, y, z), world.getBlockAt(x, y, z).getData()));
-                    thisZ++;
+                    BlockList.add(new StructureBlock(x - pastePoint.getBlockX(), y - pastePoint.getBlockY(), z - pastePoint.getBlockZ(), world.getBlockTypeIdAt(x, y, z), world.getBlockAt(x, y, z).getData()).updateExtraInformation(pastePoint.getWorld(), x, y, z));
                 }
-                thisX++;
             }
-            thisY++;
         }
     }
 
-    public void createStructure(EnumDirection direction, Player player) {
+    public void pasteStructure(EnumDirection direction, Player player) {
         if (this.BlockList == null)
             return;
 
@@ -68,7 +62,7 @@ public class Structure {
             pasteList = this.rotate270();
         }
 
-        BlockCreationThread thisThread = new BlockCreationThread(player, this, pasteList);
+        BlockCreationThread thisThread = new BlockCreationThread(player, pasteList);
         thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
     }
 

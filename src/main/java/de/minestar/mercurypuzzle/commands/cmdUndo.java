@@ -18,16 +18,14 @@
 
 package de.minestar.mercurypuzzle.commands;
 
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.bukkit.gemo.commands.Command;
 import com.bukkit.gemo.utils.ChatUtils;
-import com.bukkit.gemo.utils.UtilPermissions;
 
 import de.minestar.mercurypuzzle.Manager.PlayerManager;
+import de.minestar.minestarlibrary.commands.AbstractCommand;
 
-public class cmdUndo extends Command {
+public class cmdUndo extends AbstractCommand {
 
     private PlayerManager playerManager;
 
@@ -38,21 +36,7 @@ public class cmdUndo extends Command {
     }
 
     @Override
-    public void execute(String[] args, CommandSender sender) {
-        // ONLY PLAYERS ARE ALLOWED
-        if (!(sender instanceof Player)) {
-            ChatUtils.printError(sender, pluginName, "This is only an ingame command.");
-            return;
-        }
-
-        // GET PLAYER
-        Player player = (Player) sender;
-        // CHECK PERMISSION
-        if (!UtilPermissions.playerCanUseCommand(player, "wefake.undo")) {
-            ChatUtils.printError(player, pluginName, "You are not allowed to use this command.");
-            return;
-        }
-
+    public void execute(String[] args, Player player) {
         // CHECK FOR RUNNING THREAD
         if (playerManager.hasRunningThread(player)) {
             ChatUtils.printError(player, pluginName, "You have a running thread. Please wait until it's finished.");

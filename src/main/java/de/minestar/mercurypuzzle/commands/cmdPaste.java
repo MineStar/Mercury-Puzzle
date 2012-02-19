@@ -18,17 +18,15 @@
 
 package de.minestar.mercurypuzzle.commands;
 
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.bukkit.gemo.commands.ExtendedCommand;
 import com.bukkit.gemo.utils.ChatUtils;
-import com.bukkit.gemo.utils.UtilPermissions;
 
 import de.minestar.mercurypuzzle.Enums.EnumDirection;
 import de.minestar.mercurypuzzle.Manager.PlayerManager;
+import de.minestar.minestarlibrary.commands.AbstractExtendedCommand;
 
-public class cmdPaste extends ExtendedCommand {
+public class cmdPaste extends AbstractExtendedCommand {
 
     private PlayerManager playerManager;
 
@@ -39,22 +37,7 @@ public class cmdPaste extends ExtendedCommand {
     }
 
     @Override
-    public void execute(String[] args, CommandSender sender) {
-        // ONLY PLAYERS ARE ALLOWED
-        if (!(sender instanceof Player)) {
-            ChatUtils.printError(sender, pluginName, "This is only an ingame command.");
-            return;
-        }
-
-        // GET PLAYER
-        Player player = (Player) sender;
-
-        // CHECK PERMISSION
-        if (!UtilPermissions.playerCanUseCommand(player, "wefake.paste")) {
-            ChatUtils.printError(player, pluginName, "You are not allowed to use this command.");
-            return;
-        }
-
+    public void execute(String[] args, Player player) {
         // CHECK FOR RUNNING THREAD
         if (playerManager.hasRunningThread(player)) {
             ChatUtils.printError(player, pluginName, "You have a running thread. Please wait until it's finished.");

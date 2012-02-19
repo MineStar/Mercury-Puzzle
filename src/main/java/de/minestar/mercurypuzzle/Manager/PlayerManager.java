@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 import de.minestar.mercurypuzzle.Core.Core;
 import de.minestar.mercurypuzzle.Core.Settings;
 import de.minestar.mercurypuzzle.Enums.EnumDirection;
+import de.minestar.mercurypuzzle.Structure.Structure;
+import de.minestar.mercurypuzzle.Structure.StructureBlock;
 import de.minestar.mercurypuzzle.Threads.BlockUndoThread;
-import de.minestar.mercurypuzzle.Units.Structure;
-import de.minestar.mercurypuzzle.Units.StructureBlock;
 
 public class PlayerManager {
     private HashSet<String> runningThreads = new HashSet<String>();
@@ -54,7 +54,7 @@ public class PlayerManager {
         if (!structureList.containsKey(player.getName()))
             return false;
         runningThreads.add(player.getName());
-        this.structureList.get(player.getName()).createStructure(direction, player);
+        this.structureList.get(player.getName()).pasteStructure(direction, player);
         return true;
     }
 

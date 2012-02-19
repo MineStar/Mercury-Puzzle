@@ -15,8 +15,7 @@ import com.bukkit.gemo.utils.ChatUtils;
 
 import de.minestar.mercurypuzzle.Core.Core;
 import de.minestar.mercurypuzzle.Core.Settings;
-import de.minestar.mercurypuzzle.Units.Structure;
-import de.minestar.mercurypuzzle.Units.StructureBlock;
+import de.minestar.mercurypuzzle.Structure.StructureBlock;
 
 public class BlockCreationThread implements Runnable {
 
@@ -24,14 +23,12 @@ public class BlockCreationThread implements Runnable {
     private final Vector insertVector;
     private int TaskID = -9999;
     private int counter = 0;
-    private Structure structure;
     private final ArrayList<StructureBlock> blockList, undoBlocks, queuedBlocks;
     private final String playerName;
 
-    public BlockCreationThread(Player player, Structure structure, ArrayList<StructureBlock> blockList) {
+    public BlockCreationThread(Player player, ArrayList<StructureBlock> blockList) {
         this.world = player.getWorld();
         this.insertVector = player.getLocation().toVector();
-        this.structure = structure;
         this.blockList = blockList;
         this.playerName = player.getName();
         this.undoBlocks = new ArrayList<StructureBlock>();
@@ -46,8 +43,8 @@ public class BlockCreationThread implements Runnable {
         Block thisWorldBlock;
         for (int i = 0; i < blockList.size(); i++) {
             thisBlock = blockList.get(i);
-            thisWorldBlock = world.getBlockAt(insertVector.getBlockX() - this.structure.getDistanceVector().getBlockX() + thisBlock.getX(), insertVector.getBlockY() - this.structure.getDistanceVector().getBlockY() + thisBlock.getY(), insertVector.getBlockZ() - this.structure.getDistanceVector().getBlockZ() + thisBlock.getZ());
-            undoBlocks.add(new StructureBlock(thisWorldBlock.getX(), thisWorldBlock.getY(), thisWorldBlock.getZ(), thisWorldBlock.getTypeId(), thisWorldBlock.getData()));
+            thisWorldBlock = world.getBlockAt(insertVector.getBlockX() + thisBlock.getX(), insertVector.getBlockY() + thisBlock.getY(), insertVector.getBlockZ() + thisBlock.getZ());
+            undoBlocks.add(new StructureBlock(thisWorldBlock.getX(), thisWorldBlock.getY(), thisWorldBlock.getZ(), thisWorldBlock.getTypeId(), thisWorldBlock.getData()).updateExtraInformation(world, thisWorldBlock.getX(), thisWorldBlock.getY(), thisWorldBlock.getZ()));
         }
         Core.getInstance().getPlayerManager().addUndo(this.playerName, this.undoBlocks);
     }
@@ -62,13 +59,16 @@ public class BlockCreationThread implements Runnable {
         // FINALLY PASTE IT
         for (int i = 0; i < Settings.getMaxBlockxReplaceAtOnce(); i++) {
             thisBlock = blockList.get(blockList.size() - 1 - counter);
-            thisWorldBlock = world.getBlockAt(insertVector.getBlockX() - this.structure.getDistanceVector().getBlockX() + thisBlock.getX(), insertVector.getBlockY() - this.structure.getDistanceVector().getBlockY() + thisBlock.getY(), insertVector.getBlockZ() - this.structure.getDistanceVector().getBlockZ() + thisBlock.getZ());
+            thisWorldBlock = world.getBlockAt(insertVector.getBlockX() + thisBlock.getX(), insertVector.getBlockY() + thisBlock.getY(), insertVector.getBlockZ() + thisBlock.getZ());
             if (BlockUtils.isComplexBlock(thisWorldBlock.getTypeId())) {
                 thisWorldBlock.setTypeIdAndData(0, (byte) 0, false);
             }
             if (thisWorldBlock.getTypeId() != thisBlock.getTypeID() || thisBlock.getSubID() != thisWorldBlock.getData()) {
                 if (!BlockUtils.isComplexBlock(thisBlock.getTypeID())) {
                     thisWorldBlock.setTypeIdAndData(thisBlock.getTypeID(), thisBlock.getSubID(), false);
+                    if (thisBlock.getExtraInformation() != null) {
+                        thisBlock.getExtraInformation().pasteInformation(thisWorldBlock);
+                    }
                 } else {
                     this.queuedBlocks.add(thisBlock);
                 }
@@ -79,9 +79,12 @@ public class BlockCreationThread implements Runnable {
                 // PASTE QUEUED BLOCKS
                 for (int j = 0; j < queuedBlocks.size(); j++) {
                     thisBlock = queuedBlocks.get(j);
-                    thisWorldBlock = world.getBlockAt(insertVector.getBlockX() - this.structure.getDistanceVector().getBlockX() + thisBlock.getX(), insertVector.getBlockY() - this.structure.getDistanceVector().getBlockY() + thisBlock.getY(), insertVector.getBlockZ() - this.structure.getDistanceVector().getBlockZ() + thisBlock.getZ());
+                    thisWorldBlock = world.getBlockAt(insertVector.getBlockX() + thisBlock.getX(), insertVector.getBlockY() + thisBlock.getY(), insertVector.getBlockZ() + thisBlock.getZ());
                     if (thisBlock.getTypeID() != thisWorldBlock.getTypeId() || thisBlock.getSubID() != thisWorldBlock.getData()) {
                         thisWorldBlock.setTypeIdAndData(thisBlock.getTypeID(), thisBlock.getSubID(), false);
+                        if (thisBlock.getExtraInformation() != null) {
+                            thisBlock.getExtraInformation().pasteInformation(thisWorldBlock);
+                        }
                     }
                 }
 
@@ -89,7 +92,7 @@ public class BlockCreationThread implements Runnable {
                 net.minecraft.server.World nativeWorld = ((CraftWorld) world).getHandle();
                 for (int j = 0; j < blockList.size(); j++) {
                     thisBlock = blockList.get(j);
-                    thisWorldBlock = world.getBlockAt(insertVector.getBlockX() - this.structure.getDistanceVector().getBlockX() + thisBlock.getX(), insertVector.getBlockY() - this.structure.getDistanceVector().getBlockY() + thisBlock.getY(), insertVector.getBlockZ() - this.structure.getDistanceVector().getBlockZ() + thisBlock.getZ());
+                    thisWorldBlock = world.getBlockAt(insertVector.getBlockX() + thisBlock.getX(), insertVector.getBlockY() + thisBlock.getY(), insertVector.getBlockZ() + thisBlock.getZ());
                     nativeWorld.notify(thisWorldBlock.getX(), thisWorldBlock.getY(), thisWorldBlock.getZ());
                     nativeWorld.applyPhysics(thisWorldBlock.getX(), thisWorldBlock.getY(), thisWorldBlock.getZ(), thisWorldBlock.getTypeId());
                 }
