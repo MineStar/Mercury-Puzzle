@@ -7,6 +7,7 @@ import java.util.HashSet;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import de.minestar.mercurypuzzle.Core.MercuryPuzzleCore;
@@ -54,7 +55,21 @@ public class PlayerManager {
         Location minCorner = thisSelection.getMinCorner();
         Location maxCorner = thisSelection.getMaxCorner();
 
+        // CREATE UNDO-LIST
+        ArrayList<StructureBlock> undoBlocks = new ArrayList<StructureBlock>();
+        Block thisBlock;
         World world = minCorner.getWorld();
+        for (int y = minCorner.getBlockY(); y <= maxCorner.getBlockY(); y++) {
+            for (int x = minCorner.getBlockX(); x <= maxCorner.getBlockX(); x++) {
+                for (int z = minCorner.getBlockZ(); z <= maxCorner.getBlockZ(); z++) {
+                    thisBlock = world.getBlockAt(x, y, z);
+                    undoBlocks.add(new StructureBlock(thisBlock.getX(), thisBlock.getY(), thisBlock.getZ(), thisBlock.getTypeId(), thisBlock.getData()).updateExtraInformation(world, thisBlock.getX(), thisBlock.getY(), thisBlock.getZ()));
+                }
+            }
+        }
+        MercuryPuzzleCore.getInstance().getPlayerManager().addUndo(player.getName(), undoBlocks);
+
+        // SET BLOCKS
         for (int y = minCorner.getBlockY(); y <= maxCorner.getBlockY(); y++) {
             for (int x = minCorner.getBlockX(); x <= maxCorner.getBlockX(); x++) {
                 for (int z = minCorner.getBlockZ(); z <= maxCorner.getBlockZ(); z++) {
