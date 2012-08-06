@@ -1,6 +1,7 @@
 name: Mercury Puzzle
 main: de.minestar.mercurypuzzle.Core.Core
 version: 0.1
+depend: [MineStarLibrary]
 commands:
   ccopy:
     description: Copys the current selection
