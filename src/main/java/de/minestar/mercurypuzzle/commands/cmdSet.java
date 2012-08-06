@@ -24,10 +24,10 @@ import com.bukkit.gemo.utils.BlockUtils;
 import com.bukkit.gemo.utils.ChatUtils;
 
 import de.minestar.mercurypuzzle.Manager.PlayerManager;
-import de.minestar.minestarlibrary.commands.AbstractCommand;
+import de.minestar.minestarlibrary.commands.AbstractExtendedCommand;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
-public class cmdSet extends AbstractCommand {
+public class cmdSet extends AbstractExtendedCommand {
 
     private PlayerManager playerManager;
 

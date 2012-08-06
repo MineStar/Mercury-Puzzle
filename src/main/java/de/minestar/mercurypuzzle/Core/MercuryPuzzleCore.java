@@ -75,7 +75,7 @@ public class MercuryPuzzleCore extends JavaPlugin {
                         new cmdCopy("[Mercury]", "/ccopy", "", "mercury.copy", this.playerManager),
                         new cmdPaste("[Mercury]", "/cpaste", "", "mercury.copy", this.playerManager),
                         new cmdUndo("[Mercury]", "/cundo", "", "mercury.copy", this.playerManager),
-                        new cmdSet("[Mercury]", "/set", "", "mercury.set", this.playerManager),
+                        new cmdSet("[Mercury]", "/set", "<TypeID> [SubID]", "mercury.set", this.playerManager),
         };
         /* @formatter:on */
         // store the commands in the hash map
