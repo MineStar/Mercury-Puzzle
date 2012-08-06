@@ -6,9 +6,10 @@ import java.util.HashSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
-import de.minestar.mercurypuzzle.Core.Core;
+import de.minestar.mercurypuzzle.Core.MercuryPuzzleCore;
 import de.minestar.mercurypuzzle.Core.Settings;
 import de.minestar.mercurypuzzle.Enums.EnumDirection;
 import de.minestar.mercurypuzzle.Structure.Structure;
@@ -42,6 +43,28 @@ public class PlayerManager {
         return true;
     }
 
+    public boolean setBlocks(Player player, int TypeID, byte SubID) {
+        if (!selectionList.containsKey(player.getName()))
+            return false;
+
+        Selection thisSelection = this.selectionList.get(player.getName());
+        if (!thisSelection.isValid())
+            return false;
+
+        Location minCorner = thisSelection.getMinCorner();
+        Location maxCorner = thisSelection.getMaxCorner();
+
+        World world = minCorner.getWorld();
+        for (int y = minCorner.getBlockY(); y <= maxCorner.getBlockY(); y++) {
+            for (int x = minCorner.getBlockX(); x <= maxCorner.getBlockX(); x++) {
+                for (int z = minCorner.getBlockZ(); z <= maxCorner.getBlockZ(); z++) {
+                    world.getBlockAt(x, y, z).setTypeIdAndData(TypeID, SubID, true);
+                }
+            }
+        }
+        return true;
+    }
+
     public void addUndo(String playerName, ArrayList<StructureBlock> blockList) {
         this.undoList.put(playerName, blockList);
     }
@@ -63,7 +86,7 @@ public class PlayerManager {
             return false;
         runningThreads.add(player.getName());
         BlockUndoThread thisThread = new BlockUndoThread(player, this.undoList.get(player.getName()));
-        thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
+        thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(MercuryPuzzleCore.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
         return true;
     }
 

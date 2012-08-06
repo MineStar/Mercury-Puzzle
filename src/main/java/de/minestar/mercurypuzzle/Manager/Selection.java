@@ -21,6 +21,22 @@ public class Selection {
         this.corner2 = corner2;
     }
 
+    public Location getMinCorner() {
+        Location loc = corner1.clone();
+        loc.setX(Math.min(corner1.getBlockX(), corner2.getBlockX()));
+        loc.setY(Math.min(corner1.getBlockY(), corner2.getBlockY()));
+        loc.setZ(Math.min(corner1.getBlockZ(), corner2.getBlockZ()));
+        return loc;
+    }
+
+    public Location getMaxCorner() {
+        Location loc = corner1.clone();
+        loc.setX(Math.max(corner1.getBlockX(), corner2.getBlockX()));
+        loc.setY(Math.max(corner1.getBlockY(), corner2.getBlockY()));
+        loc.setZ(Math.max(corner1.getBlockZ(), corner2.getBlockZ()));
+        return loc;
+    }
+
     public boolean isValid() {
         return this.corner1 != null && this.corner2 != null;
     }

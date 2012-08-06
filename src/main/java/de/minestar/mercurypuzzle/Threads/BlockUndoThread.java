@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import com.bukkit.gemo.utils.BlockUtils;
 import com.bukkit.gemo.utils.ChatUtils;
 
-import de.minestar.mercurypuzzle.Core.Core;
+import de.minestar.mercurypuzzle.Core.MercuryPuzzleCore;
 import de.minestar.mercurypuzzle.Core.Settings;
 import de.minestar.mercurypuzzle.Structure.StructureBlock;
 
@@ -73,7 +73,7 @@ public class BlockUndoThread implements Runnable {
                 // UNDO QUEUED BLOCKS
                 if (firstUndo) {
                     BlockUndoThread thisThread = new BlockUndoThread(world, this.playerName, this.queuedBlocks, false);
-                    thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
+                    thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(MercuryPuzzleCore.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
                 }
 
                 // UPDATE PHYSICS
@@ -87,18 +87,18 @@ public class BlockUndoThread implements Runnable {
 
                 // CANCEL TASK & PRINT INFO
                 if (!firstUndo)
-                    Core.getInstance().getPlayerManager().removeRunningThread(this.playerName);
+                    MercuryPuzzleCore.getInstance().getPlayerManager().removeRunningThread(this.playerName);
 
                 Bukkit.getScheduler().cancelTask(this.TaskID);
                 if (thisPlayer != null) {
-                    ChatUtils.printSuccess(thisPlayer, Core.getInstance().getDescription().getName(), "Undo done!");
+                    ChatUtils.printSuccess(thisPlayer, MercuryPuzzleCore.getInstance().getDescription().getName(), "Undo done!");
                 }
                 break;
             }
         }
 
         if (thisPlayer != null) {
-            ChatUtils.printInfo(thisPlayer, Core.getInstance().getDescription().getName(), ChatColor.GRAY, counter + " blocks of " + this.blockList.size() + " undone.");
+            ChatUtils.printInfo(thisPlayer, MercuryPuzzleCore.getInstance().getDescription().getName(), ChatColor.GRAY, counter + " blocks of " + this.blockList.size() + " undone.");
         }
         thisBlock = null;
     }

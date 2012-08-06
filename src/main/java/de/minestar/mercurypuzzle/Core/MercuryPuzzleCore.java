@@ -30,18 +30,19 @@ import de.minestar.mercurypuzzle.Listener.PlayerListener;
 import de.minestar.mercurypuzzle.Manager.PlayerManager;
 import de.minestar.mercurypuzzle.commands.cmdCopy;
 import de.minestar.mercurypuzzle.commands.cmdPaste;
+import de.minestar.mercurypuzzle.commands.cmdSet;
 import de.minestar.mercurypuzzle.commands.cmdUndo;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
 import de.minestar.minestarlibrary.commands.CommandList;
 
-public class Core extends JavaPlugin {
+public class MercuryPuzzleCore extends JavaPlugin {
 
     private PlayerManager playerManager;
     private PlayerListener playerListener;
 
     private CommandList cmdList;
 
-    private static Core instance;
+    private static MercuryPuzzleCore instance;
 
     public void onDisable() {
         TextUtils.logInfo("Disabled!");
@@ -74,6 +75,7 @@ public class Core extends JavaPlugin {
                         new cmdCopy("[Mercury]", "/ccopy", "", "mercury.copy", this.playerManager),
                         new cmdPaste("[Mercury]", "/cpaste", "", "mercury.copy", this.playerManager),
                         new cmdUndo("[Mercury]", "/cundo", "", "mercury.copy", this.playerManager),
+                        new cmdSet("[Mercury]", "/set", "", "mercury.set", this.playerManager),
         };
         /* @formatter:on */
         // store the commands in the hash map
@@ -86,7 +88,7 @@ public class Core extends JavaPlugin {
         return true;
     }
 
-    public static Core getInstance() {
+    public static MercuryPuzzleCore getInstance() {
         return instance;
     }
 

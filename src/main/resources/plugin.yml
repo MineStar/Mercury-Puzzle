@@ -11,3 +11,6 @@ commands:
   cundo:
     description: Undo the last paste
     usage: /cundo
+  set:
+    description: Set blocks
+    usage: /set <ID> [SubID]

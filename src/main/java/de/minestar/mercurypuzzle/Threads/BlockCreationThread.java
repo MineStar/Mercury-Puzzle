@@ -13,7 +13,7 @@ import org.bukkit.util.Vector;
 import com.bukkit.gemo.utils.BlockUtils;
 import com.bukkit.gemo.utils.ChatUtils;
 
-import de.minestar.mercurypuzzle.Core.Core;
+import de.minestar.mercurypuzzle.Core.MercuryPuzzleCore;
 import de.minestar.mercurypuzzle.Core.Settings;
 import de.minestar.mercurypuzzle.Structure.StructureBlock;
 
@@ -46,7 +46,7 @@ public class BlockCreationThread implements Runnable {
             thisWorldBlock = world.getBlockAt(insertVector.getBlockX() + thisBlock.getX(), insertVector.getBlockY() + thisBlock.getY(), insertVector.getBlockZ() + thisBlock.getZ());
             undoBlocks.add(new StructureBlock(thisWorldBlock.getX(), thisWorldBlock.getY(), thisWorldBlock.getZ(), thisWorldBlock.getTypeId(), thisWorldBlock.getData()).updateExtraInformation(world, thisWorldBlock.getX(), thisWorldBlock.getY(), thisWorldBlock.getZ()));
         }
-        Core.getInstance().getPlayerManager().addUndo(this.playerName, this.undoBlocks);
+        MercuryPuzzleCore.getInstance().getPlayerManager().addUndo(this.playerName, this.undoBlocks);
     }
 
     public void run() {
@@ -99,16 +99,16 @@ public class BlockCreationThread implements Runnable {
 
                 // CANCEL TASK & PRINT INFO
                 Bukkit.getScheduler().cancelTask(this.TaskID);
-                Core.getInstance().getPlayerManager().removeRunningThread(this.playerName);
+                MercuryPuzzleCore.getInstance().getPlayerManager().removeRunningThread(this.playerName);
                 if (thisPlayer != null) {
-                    ChatUtils.printSuccess(thisPlayer, Core.getInstance().getDescription().getName(), "Paste done!");
+                    ChatUtils.printSuccess(thisPlayer, MercuryPuzzleCore.getInstance().getDescription().getName(), "Paste done!");
                 }
                 break;
             }
         }
 
         if (thisPlayer != null) {
-            ChatUtils.printInfo(thisPlayer, Core.getInstance().getDescription().getName(), ChatColor.GRAY, counter + " blocks of " + this.blockList.size() + " pasted.");
+            ChatUtils.printInfo(thisPlayer, MercuryPuzzleCore.getInstance().getDescription().getName(), ChatColor.GRAY, counter + " blocks of " + this.blockList.size() + " pasted.");
         }
         thisBlock = null;
     }

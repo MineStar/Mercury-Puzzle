@@ -8,7 +8,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import de.minestar.mercurypuzzle.Core.Core;
+import de.minestar.mercurypuzzle.Core.MercuryPuzzleCore;
 import de.minestar.mercurypuzzle.Core.Settings;
 import de.minestar.mercurypuzzle.Enums.EnumDirection;
 import de.minestar.mercurypuzzle.Threads.BlockCreationThread;
@@ -63,7 +63,7 @@ public class Structure {
         }
 
         BlockCreationThread thisThread = new BlockCreationThread(player, pasteList);
-        thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(Core.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
+        thisThread.initTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(MercuryPuzzleCore.getInstance(), thisThread, 0, Settings.getTicksBetweenReplace()));
     }
 
     private ArrayList<StructureBlock> flipX(ArrayList<StructureBlock> BlockList) {
