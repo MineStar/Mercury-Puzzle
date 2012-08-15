@@ -21,7 +21,6 @@ package de.minestar.mercurypuzzle.commands;
 import org.bukkit.entity.Player;
 
 import com.bukkit.gemo.utils.BlockUtils;
-import com.bukkit.gemo.utils.ChatUtils;
 
 import de.minestar.mercurypuzzle.Manager.PlayerManager;
 import de.minestar.minestarlibrary.commands.AbstractExtendedCommand;
@@ -65,10 +64,6 @@ public class cmdSet extends AbstractExtendedCommand {
 
         // SET BLOCKS
         this.playerManager.prepareSetCommand(player, TypeID, SubID);
-        if (playerManager.setBlocks(player)) {
-            ChatUtils.printSuccess(player, pluginName, "Blocks set!");
-        } else {
-            ChatUtils.printError(player, pluginName, "Something went wrong...");
-        }
+        playerManager.setBlocks(player);
     }
 }

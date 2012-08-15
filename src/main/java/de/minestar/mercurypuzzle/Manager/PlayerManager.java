@@ -8,6 +8,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import com.bukkit.gemo.utils.ChatUtils;
+
 import de.minestar.mercurypuzzle.Core.MercuryPuzzleCore;
 import de.minestar.mercurypuzzle.Core.Settings;
 import de.minestar.mercurypuzzle.Enums.EnumDirection;
@@ -55,8 +57,11 @@ public class PlayerManager {
     }
 
     public boolean setBlocks(Player player) {
-        if (!structureList.containsKey(player.getName()))
+        if (!structureList.containsKey(player.getName())) {
+            ChatUtils.printError(player, "Mercury Puzzle", "You need to select a region first.");
             return false;
+        }
+        ChatUtils.printSuccess(player, "Mercury Puzzle", "Setting blocks...");
         runningThreads.add(player.getName());
         this.structureList.get(player.getName()).pasteStructure(EnumDirection.NORMAL, player);
         return true;
@@ -71,8 +76,11 @@ public class PlayerManager {
     }
 
     public boolean doPaste(Player player, EnumDirection direction) {
-        if (!structureList.containsKey(player.getName()))
+        if (!structureList.containsKey(player.getName())) {
+            ChatUtils.printError(player, "Mercury Puzzle", "You need to copy a region first.");
             return false;
+        }
+        ChatUtils.printSuccess(player, "Mercury Puzzle", "Region paste started!");
         runningThreads.add(player.getName());
         this.structureList.get(player.getName()).pasteStructure(direction, player);
         return true;

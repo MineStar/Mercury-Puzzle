@@ -54,10 +54,6 @@ public class cmdPaste extends AbstractExtendedCommand {
         }
 
         // PASTE
-        if (playerManager.doPaste(player, direction)) {
-            ChatUtils.printSuccess(player, pluginName, "Region paste started!");
-        } else {
-            ChatUtils.printError(player, pluginName, "You need to copy a region first.");
-        }
+        playerManager.doPaste(player, direction);
     }
 }
