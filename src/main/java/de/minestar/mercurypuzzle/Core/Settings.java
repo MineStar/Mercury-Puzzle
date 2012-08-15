@@ -5,8 +5,8 @@ import java.io.File;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Settings {
-    private static int MAX_BLOCKS_REPLACE_AT_ONCE = 50000;
-    private static int TICKS_BETWEEN_REPLACE = 10 * 20;
+    private static int MAX_BLOCKS_REPLACE_AT_ONCE = 10000;
+    private static int TICKS_BETWEEN_REPLACE = 20;
 
     public static void init(File dataFolder) {
         try {
@@ -19,8 +19,8 @@ public class Settings {
             YamlConfiguration config = new YamlConfiguration();
             config.load(file);
 
-            MAX_BLOCKS_REPLACE_AT_ONCE = config.getInt("Threads.Structures.MaxReplaceAtOnce", MAX_BLOCKS_REPLACE_AT_ONCE);
-            TICKS_BETWEEN_REPLACE = config.getInt("Threads.Structures.ticksBetweenReplace", TICKS_BETWEEN_REPLACE);
+            MAX_BLOCKS_REPLACE_AT_ONCE = 5000;
+            TICKS_BETWEEN_REPLACE = 5;
 
         } catch (Exception e) {
             e.printStackTrace();

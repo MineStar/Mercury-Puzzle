@@ -64,7 +64,8 @@ public class cmdSet extends AbstractExtendedCommand {
         }
 
         // SET BLOCKS
-        if (playerManager.setBlocks(player, TypeID, SubID)) {
+        this.playerManager.prepareSetCommand(player, TypeID, SubID);
+        if (playerManager.setBlocks(player)) {
             ChatUtils.printSuccess(player, pluginName, "Blocks set!");
         } else {
             ChatUtils.printError(player, pluginName, "Something went wrong...");

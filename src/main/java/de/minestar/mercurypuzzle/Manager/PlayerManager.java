@@ -6,8 +6,6 @@ import java.util.HashSet;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import de.minestar.mercurypuzzle.Core.MercuryPuzzleCore;
@@ -44,7 +42,7 @@ public class PlayerManager {
         return true;
     }
 
-    public boolean setBlocks(Player player, int TypeID, byte SubID) {
+    public boolean prepareSetCommand(Player player, int TypeID, byte SubID) {
         if (!selectionList.containsKey(player.getName()))
             return false;
 
@@ -52,31 +50,15 @@ public class PlayerManager {
         if (!thisSelection.isValid())
             return false;
 
-        Location minCorner = thisSelection.getMinCorner();
-        Location maxCorner = thisSelection.getMaxCorner();
+        this.structureList.put(player.getName(), new Structure(player.getLocation(), thisSelection.getCorner1().toVector(), thisSelection.getCorner2().toVector(), TypeID, SubID));
+        return true;
+    }
 
-        // CREATE UNDO-LIST
-        ArrayList<StructureBlock> undoBlocks = new ArrayList<StructureBlock>();
-        Block thisBlock;
-        World world = minCorner.getWorld();
-        for (int y = minCorner.getBlockY(); y <= maxCorner.getBlockY(); y++) {
-            for (int x = minCorner.getBlockX(); x <= maxCorner.getBlockX(); x++) {
-                for (int z = minCorner.getBlockZ(); z <= maxCorner.getBlockZ(); z++) {
-                    thisBlock = world.getBlockAt(x, y, z);
-                    undoBlocks.add(new StructureBlock(thisBlock.getX(), thisBlock.getY(), thisBlock.getZ(), thisBlock.getTypeId(), thisBlock.getData()).updateExtraInformation(world, thisBlock.getX(), thisBlock.getY(), thisBlock.getZ()));
-                }
-            }
-        }
-        MercuryPuzzleCore.getInstance().getPlayerManager().addUndo(player.getName(), undoBlocks);
-
-        // SET BLOCKS
-        for (int y = minCorner.getBlockY(); y <= maxCorner.getBlockY(); y++) {
-            for (int x = minCorner.getBlockX(); x <= maxCorner.getBlockX(); x++) {
-                for (int z = minCorner.getBlockZ(); z <= maxCorner.getBlockZ(); z++) {
-                    world.getBlockAt(x, y, z).setTypeIdAndData(TypeID, SubID, true);
-                }
-            }
-        }
+    public boolean setBlocks(Player player) {
+        if (!structureList.containsKey(player.getName()))
+            return false;
+        runningThreads.add(player.getName());
+        this.structureList.get(player.getName()).pasteStructure(EnumDirection.NORMAL, player);
         return true;
     }
 

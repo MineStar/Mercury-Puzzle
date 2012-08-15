@@ -35,6 +35,23 @@ public class Structure {
         }
     }
 
+    public Structure(Location pastePoint, Vector vector1, Vector vector2, int TypeID, byte SubID) {
+        Vector minVector = new Vector(Math.min(vector1.getBlockX(), vector2.getBlockX()), Math.min(vector1.getBlockY(), vector2.getBlockY()), Math.min(vector1.getBlockZ(), vector2.getBlockZ()));
+        Vector maxVector = new Vector(Math.max(vector1.getBlockX(), vector2.getBlockX()), Math.max(vector1.getBlockY(), vector2.getBlockY()), Math.max(vector1.getBlockZ(), vector2.getBlockZ()));
+
+        this.sizeVector = new Vector(maxVector.getBlockX() - minVector.getBlockX(), maxVector.getBlockY() - minVector.getBlockY(), maxVector.getBlockZ() - minVector.getBlockZ());
+        this.distanceVector = new Vector(pastePoint.getBlockX() - minVector.getBlockX(), pastePoint.getBlockY() - minVector.getBlockY(), pastePoint.getBlockZ() - minVector.getBlockZ());
+
+        this.BlockList = new ArrayList<StructureBlock>();
+        for (int y = minVector.getBlockY(); y <= maxVector.getBlockY(); y++) {
+            for (int x = minVector.getBlockX(); x <= maxVector.getBlockX(); x++) {
+                for (int z = minVector.getBlockZ(); z <= maxVector.getBlockZ(); z++) {
+                    BlockList.add(new StructureBlock(x - pastePoint.getBlockX(), y - pastePoint.getBlockY(), z - pastePoint.getBlockZ(), TypeID, SubID));
+                }
+            }
+        }
+    }
+
     public void pasteStructure(EnumDirection direction, Player player) {
         if (this.BlockList == null)
             return;

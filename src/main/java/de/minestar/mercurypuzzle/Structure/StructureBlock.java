@@ -42,7 +42,7 @@ public class StructureBlock {
         if (this.TypeID == Material.WALL_SIGN.getId() || this.TypeID == Material.SIGN_POST.getId()) {
             this.extraInformation = new InformationSign(((Sign) world.getBlockAt(x, y, z).getState()).getLines());
         } else if (this.TypeID == Material.CHEST.getId()) {
-            this.extraInformation = new InformationChest(((Chest) world.getBlockAt(x, y, z).getState()).getInventory());
+            this.extraInformation = new InformationChest(((Chest) world.getBlockAt(x, y, z).getState()).getBlockInventory());
         } else if (this.TypeID == Material.DISPENSER.getId()) {
             this.extraInformation = new InformationDispenser(((Dispenser) world.getBlockAt(x, y, z).getState()).getInventory());
         } else if (this.TypeID == Material.FURNACE.getId() || this.TypeID == Material.BURNING_FURNACE.getId()) {
