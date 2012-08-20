@@ -18,7 +18,6 @@
 
 package de.minestar.mercurypuzzle.statistics;
 
-import java.sql.Timestamp;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -34,7 +33,6 @@ public class SetStat implements Statistic {
     private String player;
     private String corner1, corner2;
     private int TypeID, SubID;
-    private Timestamp date;
 
     public SetStat() {
         // EMPTY CONSTRUCTOR FOR REFLECTION ACCESS
@@ -46,7 +44,6 @@ public class SetStat implements Statistic {
         this.corner2 = maxCorner.toString();
         this.TypeID = TypeID;
         this.SubID = SubID;
-        this.date = new Timestamp(System.currentTimeMillis());
     }
 
     @Override
@@ -83,7 +80,6 @@ public class SetStat implements Statistic {
         data.add(corner2);
         data.add(TypeID);
         data.add(SubID);
-        data.add(date);
 
         return data;
     }
