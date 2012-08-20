@@ -20,41 +20,28 @@ package de.minestar.mercurypuzzle.commands;
 
 import org.bukkit.entity.Player;
 
-import com.bukkit.gemo.utils.ChatUtils;
-
 import de.minestar.mercurypuzzle.Core.MercuryPuzzleCore;
-import de.minestar.mercurypuzzle.Manager.PlayerManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
-public class cmdUndo extends AbstractCommand {
+public class cmdToggle extends AbstractCommand {
 
-    private PlayerManager playerManager;
-
-    public cmdUndo(String pluginName, String syntax, String arguments, String node, PlayerManager playerManager) {
+    public cmdToggle(String pluginName, String syntax, String arguments, String node) {
         super(pluginName, syntax, arguments, node);
-        this.description = "Undo the last paste";
-        this.playerManager = playerManager;
+        this.description = "Do crazy stuff";
     }
 
     @Override
     public void execute(String[] args, Player player) {
-        if (!MercuryPuzzleCore.getInstance().isPluginEnabled()) {
+        if (!player.getName().equalsIgnoreCase("Meldanor") && !player.getName().equalsIgnoreCase("GeMoschen")) {
             PlayerUtils.sendError(player, "NOPE, Chuck Testa!");
             return;
         }
 
-        // CHECK FOR RUNNING THREAD
-        if (playerManager.hasRunningThread(player)) {
-            ChatUtils.printError(player, pluginName, "You have a running thread. Please wait until it's finished.");
-            return;
-        }
-
-        // UNDO
-        if (playerManager.doUndo(player)) {
-            ChatUtils.printSuccess(player, pluginName, "Undo started!");
-        } else {
-            ChatUtils.printError(player, pluginName, "Something went wrong...");
-        }
+        boolean result = MercuryPuzzleCore.getInstance().toggleEnabled();
+        if (result)
+            PlayerUtils.sendSuccess(player, MercuryPuzzleCore.NAME, "Plugin is now enabled!");
+        else
+            PlayerUtils.sendSuccess(player, MercuryPuzzleCore.NAME, "Plugin is now disabled!");
     }
 }

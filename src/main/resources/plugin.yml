@@ -1,8 +1,12 @@
 name: Mercury Puzzle
 main: de.minestar.mercurypuzzle.Core.MercuryPuzzleCore
 version: 0.1
+softdepend: [Illuminati]
 depend: [MineStarLibrary]
 commands:
+  ctoggle:
+    description: Chuck Testa
+    usage: /ctoggle
   ccopy:
     description: Copys the current selection
     usage: /ccopy

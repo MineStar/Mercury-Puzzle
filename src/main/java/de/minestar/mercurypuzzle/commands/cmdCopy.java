@@ -22,8 +22,10 @@ import org.bukkit.entity.Player;
 
 import com.bukkit.gemo.utils.ChatUtils;
 
+import de.minestar.mercurypuzzle.Core.MercuryPuzzleCore;
 import de.minestar.mercurypuzzle.Manager.PlayerManager;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class cmdCopy extends AbstractCommand {
 
@@ -37,6 +39,11 @@ public class cmdCopy extends AbstractCommand {
 
     @Override
     public void execute(String[] args, Player player) {
+        if (!MercuryPuzzleCore.getInstance().isPluginEnabled()) {
+            PlayerUtils.sendError(player, "NOPE, Chuck Testa!");
+            return;
+        }
+
         // CHECK FOR RUNNING THREAD
         if (playerManager.hasRunningThread(player)) {
             ChatUtils.printError(player, pluginName, "You have a running thread. Please wait until it's finished.");

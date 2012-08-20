@@ -16,6 +16,8 @@ import de.minestar.mercurypuzzle.Enums.EnumDirection;
 import de.minestar.mercurypuzzle.Structure.Structure;
 import de.minestar.mercurypuzzle.Structure.StructureBlock;
 import de.minestar.mercurypuzzle.Threads.BlockUndoThread;
+import de.minestar.mercurypuzzle.statistics.SetStat;
+import de.minestar.minestarlibrary.stats.StatisticHandler;
 
 public class PlayerManager {
     private HashSet<String> runningThreads = new HashSet<String>();
@@ -56,17 +58,21 @@ public class PlayerManager {
         return true;
     }
 
-    public boolean setBlocks(Player player) {
+    public boolean setBlocks(Player player, int TypeID, byte SubID) {
+        Selection thisSelection = this.selectionList.get(player.getName());
+        if (!thisSelection.isValid())
+            return false;
+
         if (!structureList.containsKey(player.getName())) {
             ChatUtils.printError(player, "Mercury Puzzle", "You need to select a region first.");
             return false;
         }
+        StatisticHandler.handleStatistic(new SetStat(player.getName(), thisSelection.getMinCorner(), thisSelection.getMaxCorner(), TypeID, SubID));
         ChatUtils.printSuccess(player, "Mercury Puzzle", "Setting blocks...");
         runningThreads.add(player.getName());
         this.structureList.get(player.getName()).pasteStructure(EnumDirection.NORMAL, player);
         return true;
     }
-
     public void addUndo(String playerName, ArrayList<StructureBlock> blockList) {
         this.undoList.put(playerName, blockList);
     }

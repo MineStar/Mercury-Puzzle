@@ -22,6 +22,7 @@ import org.bukkit.entity.Player;
 
 import com.bukkit.gemo.utils.BlockUtils;
 
+import de.minestar.mercurypuzzle.Core.MercuryPuzzleCore;
 import de.minestar.mercurypuzzle.Manager.PlayerManager;
 import de.minestar.minestarlibrary.commands.AbstractExtendedCommand;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
@@ -38,6 +39,11 @@ public class cmdSet extends AbstractExtendedCommand {
 
     @Override
     public void execute(String[] args, Player player) {
+        if (!MercuryPuzzleCore.getInstance().isPluginEnabled()) {
+            PlayerUtils.sendError(player, "NOPE, Chuck Testa!");
+            return;
+        }
+
         int TypeID = -1;
         byte SubID = 0;
 
@@ -64,6 +70,6 @@ public class cmdSet extends AbstractExtendedCommand {
 
         // SET BLOCKS
         this.playerManager.prepareSetCommand(player, TypeID, SubID);
-        playerManager.setBlocks(player);
+        playerManager.setBlocks(player, TypeID, SubID);
     }
 }

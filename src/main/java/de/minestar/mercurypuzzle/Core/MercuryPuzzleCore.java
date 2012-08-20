@@ -31,11 +31,17 @@ import de.minestar.mercurypuzzle.Manager.PlayerManager;
 import de.minestar.mercurypuzzle.commands.cmdCopy;
 import de.minestar.mercurypuzzle.commands.cmdPaste;
 import de.minestar.mercurypuzzle.commands.cmdSet;
+import de.minestar.mercurypuzzle.commands.cmdToggle;
 import de.minestar.mercurypuzzle.commands.cmdUndo;
+import de.minestar.mercurypuzzle.statistics.SetStat;
 import de.minestar.minestarlibrary.commands.AbstractCommand;
 import de.minestar.minestarlibrary.commands.CommandList;
+import de.minestar.minestarlibrary.stats.StatisticHandler;
 
 public class MercuryPuzzleCore extends JavaPlugin {
+
+    private boolean pluginEnabled = false;
+    public static String NAME = "Mercury";
 
     private PlayerManager playerManager;
     private PlayerListener playerListener;
@@ -46,6 +52,15 @@ public class MercuryPuzzleCore extends JavaPlugin {
 
     public void onDisable() {
         TextUtils.logInfo("Disabled!");
+    }
+
+    public boolean toggleEnabled() {
+        this.pluginEnabled = !this.pluginEnabled;
+        return this.pluginEnabled;
+    }
+
+    public boolean isPluginEnabled() {
+        return pluginEnabled;
     }
 
     public void onEnable() {
@@ -64,6 +79,9 @@ public class MercuryPuzzleCore extends JavaPlugin {
         // REGISTER COMMANDS
         this.initCommands();
 
+        // register statistics
+        this.registerStatistics();
+
         // PRINT INFO
         TextUtils.logInfo("Version " + getDescription().getVersion() + " enabled!");
     }
@@ -72,6 +90,7 @@ public class MercuryPuzzleCore extends JavaPlugin {
         /* @formatter:off */
         // Add an command to this list to register it in the plugin       
         AbstractCommand[] commands = new AbstractCommand[] {
+                        new cmdToggle("[Mercury]", "/ctoggle", "", "mercury.enable"),
                         new cmdCopy("[Mercury]", "/ccopy", "", "mercury.copy", this.playerManager),
                         new cmdPaste("[Mercury]", "/cpaste", "", "mercury.copy", this.playerManager),
                         new cmdUndo("[Mercury]", "/cundo", "", "mercury.copy", this.playerManager),
@@ -85,6 +104,13 @@ public class MercuryPuzzleCore extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         this.cmdList.handleCommand(sender, label, args);
+        return true;
+    }
+
+    protected boolean registerStatistics() {
+
+        StatisticHandler.registerStatistic(SetStat.class);
+
         return true;
     }
 
