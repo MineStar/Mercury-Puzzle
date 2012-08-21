@@ -1,7 +1,7 @@
 name: Mercury Puzzle
 main: de.minestar.mercurypuzzle.Core.MercuryPuzzleCore
 version: 0.1
-softdepend: [Illuminati]
+softdepend: [Illuminati, GreenMile]
 depend: [MineStarLibrary]
 commands:
   ctoggle:

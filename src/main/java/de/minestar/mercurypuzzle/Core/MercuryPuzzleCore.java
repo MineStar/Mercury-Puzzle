@@ -40,7 +40,7 @@ import de.minestar.minestarlibrary.stats.StatisticHandler;
 
 public class MercuryPuzzleCore extends JavaPlugin {
 
-    private boolean pluginEnabled = false;
+    private boolean pluginEnabled = true;
     public static String NAME = "Mercury";
 
     private PlayerManager playerManager;
