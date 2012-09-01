@@ -18,6 +18,7 @@
 
 package de.minestar.mercurypuzzle.commands;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import com.bukkit.gemo.utils.BlockUtils;
@@ -66,6 +67,17 @@ public class cmdSet extends AbstractExtendedCommand {
                 PlayerUtils.sendError(player, "SubID not valid!");
                 return;
             }
+        }
+
+        Material material = Material.getMaterial(TypeID);
+        if (material == null) {
+            PlayerUtils.sendError(player, "Material not found!");
+            return;
+        }
+
+        if (!material.isBlock()) {
+            PlayerUtils.sendError(player, "Material is not a block!");
+            return;
         }
 
         // SET BLOCKS
