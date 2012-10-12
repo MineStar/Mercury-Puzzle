@@ -29,7 +29,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.minestar.mercurypuzzle.Listener.PlayerListener;
 import de.minestar.mercurypuzzle.Manager.PlayerManager;
 import de.minestar.mercurypuzzle.commands.cmdCopy;
+import de.minestar.mercurypuzzle.commands.cmdLoad;
 import de.minestar.mercurypuzzle.commands.cmdPaste;
+import de.minestar.mercurypuzzle.commands.cmdSave;
 import de.minestar.mercurypuzzle.commands.cmdSet;
 import de.minestar.mercurypuzzle.commands.cmdToggle;
 import de.minestar.mercurypuzzle.commands.cmdUndo;
@@ -94,6 +96,8 @@ public class MercuryPuzzleCore extends JavaPlugin {
                         new cmdCopy("[Mercury]", "/ccopy", "", "mercury.copy", this.playerManager),
                         new cmdPaste("[Mercury]", "/cpaste", "", "mercury.copy", this.playerManager),
                         new cmdUndo("[Mercury]", "/cundo", "", "mercury.copy", this.playerManager),
+                        new cmdSave("[Mercury]", "/csave", "<SchemeName> [Direction]", "mercury.save", this.playerManager),
+                        new cmdLoad("[Mercury]", "/cload", "<SchemeName>", "mercury.load", this.playerManager),
                         new cmdSet("[Mercury]", "/set", "<TypeID> [SubID]", "mercury.set", this.playerManager),
         };
         /* @formatter:on */

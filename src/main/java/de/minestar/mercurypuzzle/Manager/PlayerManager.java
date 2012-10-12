@@ -77,6 +77,34 @@ public class PlayerManager {
         this.undoList.put(playerName, blockList);
     }
 
+    public boolean doLoad(Player player, String schemeName) {
+        ChatUtils.printSuccess(player, "Mercury Puzzle", "Loading...");
+        Structure structure = SchemeManager.load(schemeName);
+        if (structure != null) {
+            this.structureList.put(player.getName(), structure);
+            ChatUtils.printSuccess(player, "Mercury Puzzle", "Done!");
+            return true;
+        } else {
+            ChatUtils.printError(player, "Mercury Puzzle", "Loading failed!");
+            return false;
+        }
+    }
+
+    public boolean doSave(Player player, String schemeName) {
+        return this.doSave(player, schemeName, EnumDirection.NORMAL);
+    }
+
+    public boolean doSave(Player player, String schemeName, EnumDirection direction) {
+        if (!structureList.containsKey(player.getName())) {
+            ChatUtils.printError(player, "Mercury Puzzle", "You need to copy a region first.");
+            return false;
+        }
+        ChatUtils.printSuccess(player, "Mercury Puzzle", "Saving...");
+        this.structureList.get(player.getName()).saveStructure(schemeName, direction);
+        ChatUtils.printSuccess(player, "Mercury Puzzle", "Done!");
+        return true;
+    }
+
     public boolean doPaste(Player player) {
         return this.doPaste(player, EnumDirection.NORMAL);
     }

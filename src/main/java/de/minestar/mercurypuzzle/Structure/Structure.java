@@ -11,11 +11,18 @@ import org.bukkit.util.Vector;
 import de.minestar.mercurypuzzle.Core.MercuryPuzzleCore;
 import de.minestar.mercurypuzzle.Core.Settings;
 import de.minestar.mercurypuzzle.Enums.EnumDirection;
+import de.minestar.mercurypuzzle.Manager.SchemeManager;
 import de.minestar.mercurypuzzle.Threads.BlockCreationThread;
 
 public class Structure {
     private ArrayList<StructureBlock> BlockList;
     private Vector distanceVector, sizeVector;
+
+    public Structure(ArrayList<StructureBlock> blockList, Vector distanceVector, Vector sizeVector) {
+        this.sizeVector = sizeVector.clone();
+        this.distanceVector = distanceVector.clone();
+        this.BlockList = blockList;
+    }
 
     public Structure(Location pastePoint, Vector vector1, Vector vector2) {
         Vector minVector = new Vector(Math.min(vector1.getBlockX(), vector2.getBlockX()), Math.min(vector1.getBlockY(), vector2.getBlockY()), Math.min(vector1.getBlockZ(), vector2.getBlockZ()));
@@ -50,6 +57,37 @@ public class Structure {
                 }
             }
         }
+    }
+
+    public void saveStructure(String schemeName, EnumDirection direction) {
+        if (this.BlockList == null)
+            return;
+
+        // INIT LIST
+        ArrayList<StructureBlock> pasteList = this.BlockList;
+
+        // FLIP X || ROTATE 180
+        if (direction == EnumDirection.FLIP_X || direction == EnumDirection.ROTATE_180) {
+            pasteList = this.flipX(pasteList);
+        }
+
+        // FLIP Z || ROTATE 180
+        if (direction == EnumDirection.FLIP_Z || direction == EnumDirection.ROTATE_180) {
+            pasteList = this.flipZ(pasteList);
+        }
+
+        // ROTATE 90
+        if (direction == EnumDirection.ROTATE_90) {
+            pasteList = this.rotate90();
+        }
+
+        // ROTATE 270
+        if (direction == EnumDirection.ROTATE_270) {
+            pasteList = this.rotate270();
+        }
+
+        // Save
+        SchemeManager.save(schemeName, pasteList, distanceVector, sizeVector);
     }
 
     public void pasteStructure(EnumDirection direction, Player player) {

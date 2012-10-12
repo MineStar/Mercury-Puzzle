@@ -13,6 +13,12 @@ commands:
   cpaste:
     description: Pastes the current structure
     usage: /cpaste
+  csave:
+    description: Save the current structure
+    usage: /csave
+  cload:
+    description: Load a structure
+    usage: /cload
   cundo:
     description: Undo the last paste
     usage: /cundo

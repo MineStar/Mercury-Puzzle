@@ -21,6 +21,7 @@ public class InformationSign extends StructureInformation {
         }
         for (int index = 0; index < lines.length; index++) {
             ((Sign) block.getState()).setLine(index, this.lines[index]);
+            ((Sign) block.getState()).update(true);
         }
     }
 }
