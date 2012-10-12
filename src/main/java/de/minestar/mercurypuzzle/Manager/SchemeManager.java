@@ -25,8 +25,6 @@ public class SchemeManager {
             Vector sizeVector = new Vector(reader.readInt(), reader.readInt(), reader.readInt());
             int dataSize = reader.readInt();
 
-            System.out.println("datasize: " + dataSize);
-
             int[] idData = new int[dataSize];
             int[] xData = new int[dataSize];
             int[] yData = new int[dataSize];
@@ -96,7 +94,6 @@ public class SchemeManager {
             writer.writeInt(sizeVector.getBlockZ());
 
             writer.writeInt(pasteList.size());
-            System.out.println("datasize: " + pasteList.size());
 
             for (int d : idData) {
                 writer.writeInt(d);
