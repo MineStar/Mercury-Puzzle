@@ -36,7 +36,7 @@ public class Structure {
         for (int y = minVector.getBlockY(); y <= maxVector.getBlockY(); y++) {
             for (int x = minVector.getBlockX(); x <= maxVector.getBlockX(); x++) {
                 for (int z = minVector.getBlockZ(); z <= maxVector.getBlockZ(); z++) {
-                    BlockList.add(new StructureBlock(x - pastePoint.getBlockX(), y - pastePoint.getBlockY(), z - pastePoint.getBlockZ(), world.getBlockTypeIdAt(x, y, z), world.getBlockAt(x, y, z).getData()).updateExtraInformation(pastePoint.getWorld(), x, y, z));
+                    BlockList.add(new StructureBlock(x - pastePoint.getBlockX(), y - pastePoint.getBlockY(), z - pastePoint.getBlockZ(), world.getBlockTypeIdAt(x, y, z), world.getBlockAt(x, y, z).getData()).updateExtraInformation(world, x, y, z));
                 }
             }
         }

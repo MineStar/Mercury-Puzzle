@@ -2,7 +2,7 @@ package de.minestar.mercurypuzzle.StructureInformation;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
+import org.bukkit.craftbukkit.block.CraftSign;
 
 import de.minestar.mercurypuzzle.Structure.StructureInformation;
 
@@ -19,9 +19,10 @@ public class InformationSign extends StructureInformation {
         if (block.getTypeId() != Material.WALL_SIGN.getId() && block.getTypeId() != Material.SIGN_POST.getId()) {
             return;
         }
+        CraftSign cSign = (CraftSign) block.getState();
         for (int index = 0; index < lines.length; index++) {
-            ((Sign) block.getState()).setLine(index, this.lines[index]);
-            ((Sign) block.getState()).update(true);
+            cSign.setLine(index, this.lines[index]);
         }
+        cSign.update(true);
     }
 }
