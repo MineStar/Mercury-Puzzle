@@ -2,7 +2,7 @@ package de.minestar.mercurypuzzle.StructureInformation;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.block.CraftSign;
+import org.bukkit.craftbukkit.v1_4_6.block.CraftSign;
 
 import de.minestar.mercurypuzzle.Structure.StructureInformation;
 

@@ -3,13 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.minestar</groupId>
 	<artifactId>Mercury-Puzzle</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.4.6_1-SNAPSHOT</version>
 	<name>Mercury Puzzle</name>
 	<dependencies>
 		<dependency>
 			<groupId>de.minestar</groupId>
-			<artifactId>minestarlibrary</artifactId>
-			<version>1.9.2</version>
+			<artifactId>MineStarLibrary</artifactId>
+			<version>1.4.6_1</version>
 		</dependency>
 	</dependencies>
 	<build>
