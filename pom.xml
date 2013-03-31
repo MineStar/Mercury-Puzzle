@@ -2,13 +2,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>Mercury-Puzzle</artifactId>
-	<version>1.4.6_1-SNAPSHOT</version>
 	<name>Mercury Puzzle</name>
 	<dependencies>
 		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>MineStarLibrary</artifactId>
-			<version>1.4.6_1</version>
+			<version>1.5.1_R2</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -27,7 +26,7 @@
 	<parent>
 		<groupId>de.minestar</groupId>
 		<artifactId>MinestarPlugins</artifactId>
-		<version>1.4.6_1</version>
+		<version>1.5.1_R2</version>
 		<relativePath>../../MinestarPlugins</relativePath>
 	</parent>
 </project>
