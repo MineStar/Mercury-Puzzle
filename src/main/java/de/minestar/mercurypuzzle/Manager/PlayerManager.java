@@ -26,6 +26,10 @@ public class PlayerManager {
     private HashMap<String, Structure> structureList = new HashMap<String, Structure>();
     private HashMap<String, Selection> selectionList = new HashMap<String, Selection>();
 
+    public Selection getSelection(String playerName) {
+        return this.selectionList.get(playerName);
+    }
+
     public boolean hasRunningThread(Player player) {
         return this.runningThreads.contains(player.getName());
     }
@@ -73,6 +77,7 @@ public class PlayerManager {
         this.structureList.get(player.getName()).pasteStructure(EnumDirection.NORMAL, player);
         return true;
     }
+
     public void addUndo(String playerName, ArrayList<StructureBlock> blockList) {
         this.undoList.put(playerName, blockList);
     }

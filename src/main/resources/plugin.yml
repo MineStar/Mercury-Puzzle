@@ -25,3 +25,6 @@ commands:
   set:
     description: Set blocks
     usage: /set <ID> [SubID]
+  fixsteps:
+    description: Fix the steps
+    usage: /fixsteps   

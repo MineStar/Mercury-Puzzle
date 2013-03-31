@@ -29,6 +29,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import de.minestar.mercurypuzzle.Listener.PlayerListener;
 import de.minestar.mercurypuzzle.Manager.PlayerManager;
 import de.minestar.mercurypuzzle.commands.cmdCopy;
+import de.minestar.mercurypuzzle.commands.cmdFixSteps;
 import de.minestar.mercurypuzzle.commands.cmdLoad;
 import de.minestar.mercurypuzzle.commands.cmdPaste;
 import de.minestar.mercurypuzzle.commands.cmdSave;
@@ -99,6 +100,7 @@ public class MercuryPuzzleCore extends JavaPlugin {
                         new cmdSave("[Mercury]", "/csave", "<SchemeName> [Direction]", "mercury.save", this.playerManager),
                         new cmdLoad("[Mercury]", "/cload", "<SchemeName>", "mercury.load", this.playerManager),
                         new cmdSet("[Mercury]", "/set", "<TypeID> [SubID]", "mercury.set", this.playerManager),
+                        new cmdFixSteps("[Mercury]", "/fixsteps", "", "mercury.fixsteps", this.playerManager),
         };
         /* @formatter:on */
         // store the commands in the hash map
