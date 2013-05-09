@@ -53,10 +53,10 @@ public class cmdFixSteps extends AbstractExtendedCommand {
         }
 
         int typeID = 43;
-        byte oldSubID = 6;
-        byte oldSubID2 = 6 + 8;
-        byte newSubID = 7;
-        byte newSubID2 = 7 + 8;
+        byte oldSubID = 7;
+        byte oldSubID2 = 7 + 8;
+        byte newSubID = 8;
+        byte newSubID2 = 8 + 8;
 
         Location min = selection.getMinCorner();
         Location max = selection.getMaxCorner();

@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_5_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_5_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -89,7 +89,7 @@ public class BlockCreationThread implements Runnable {
                 }
 
                 // UPDATE PHYSICS
-                net.minecraft.server.v1_5_R2.World nativeWorld = ((CraftWorld) world).getHandle();
+                net.minecraft.server.v1_5_R3.World nativeWorld = ((CraftWorld) world).getHandle();
                 for (int j = 0; j < blockList.size(); j++) {
                     thisBlock = blockList.get(j);
                     thisWorldBlock = world.getBlockAt(insertVector.getBlockX() + thisBlock.getX(), insertVector.getBlockY() + thisBlock.getY(), insertVector.getBlockZ() + thisBlock.getZ());
