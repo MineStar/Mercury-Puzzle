@@ -18,7 +18,7 @@ public class InformationChest extends StructureInformation {
     public InformationChest(Inventory inventory) {
         this.items = new HashMap<Integer, ItemStack>();
         for (int index = 0; index < inventory.getSize(); index++) {
-            if (inventory.getItem(index) == null || inventory.getItem(index).getTypeId() == Material.AIR.getId()) {
+            if (inventory.getItem(index) == null || inventory.getItem(index).getType().equals(Material.AIR)) {
                 continue;
             }
             this.items.put(index, inventory.getItem(index).clone());
@@ -27,7 +27,7 @@ public class InformationChest extends StructureInformation {
 
     @Override
     public void pasteInformation(Block block) {
-        if (block.getTypeId() != Material.CHEST.getId()) {
+        if (!block.getType().equals(Material.CHEST)) {
             return;
         }
         for (Map.Entry<Integer, ItemStack> entry : this.items.entrySet()) {

@@ -21,7 +21,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.hasBlock() && event.getPlayer().getItemInHand() != null && event.getPlayer().getItemInHand().getTypeId() == Material.DEAD_BUSH.getId() && UtilPermissions.playerCanUseCommand(event.getPlayer(), "wefake.select")) {
+        if (event.hasBlock() && event.getPlayer().getItemInHand() != null && event.getPlayer().getItemInHand().getType().equals(Material.DEAD_BUSH) && UtilPermissions.playerCanUseCommand(event.getPlayer(), "wefake.select")) {
             event.setCancelled(true);
             if (!this.playerManager.doSelection(event.getPlayer(), event.getClickedBlock().getLocation())) {
                 ChatUtils.printInfo(event.getPlayer(), MercuryPuzzleCore.getInstance().getDescription().getName(), ChatColor.LIGHT_PURPLE, "Position 1 set.");

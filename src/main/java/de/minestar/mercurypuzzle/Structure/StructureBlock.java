@@ -39,42 +39,84 @@ public class StructureBlock {
     }
 
     public StructureBlock updateExtraInformation(World world, int x, int y, int z) {
-        if (this.TypeID == Material.WALL_SIGN.getId() || this.TypeID == Material.SIGN_POST.getId()) {
-            this.extraInformation = new InformationSign(((Sign) world.getBlockAt(x, y, z).getState()).getLines());
-        } else if (this.TypeID == Material.CHEST.getId()) {
-            this.extraInformation = new InformationChest(((Chest) world.getBlockAt(x, y, z).getState()).getBlockInventory());
-        } else if (this.TypeID == Material.DISPENSER.getId()) {
-            this.extraInformation = new InformationDispenser(((Dispenser) world.getBlockAt(x, y, z).getState()).getInventory());
-        } else if (this.TypeID == Material.FURNACE.getId() || this.TypeID == Material.BURNING_FURNACE.getId()) {
-            this.extraInformation = new InformationFurnace(((Furnace) world.getBlockAt(x, y, z).getState()));
-        } else if (this.TypeID == Material.NOTE_BLOCK.getId()) {
-            this.extraInformation = new InformationNoteBlock(((NoteBlock) world.getBlockAt(x, y, z).getState()));
+        Material mat = Material.matchMaterial(Integer.toString(TypeID));
+        switch (mat) {
+            case WALL_SIGN :
+            case SIGN_POST :
+                this.extraInformation = new InformationSign(((Sign) world.getBlockAt(x, y, z).getState()).getLines());
+                break;
+            case CHEST :
+                this.extraInformation = new InformationChest(((Chest) world.getBlockAt(x, y, z).getState()).getBlockInventory());
+                break;
+            case DISPENSER :
+                this.extraInformation = new InformationDispenser(((Dispenser) world.getBlockAt(x, y, z).getState()).getInventory());
+                break;
+            case FURNACE :
+            case BURNING_FURNACE :
+                this.extraInformation = new InformationFurnace(((Furnace) world.getBlockAt(x, y, z).getState()));
+                break;
+            case NOTE_BLOCK :
+                this.extraInformation = new InformationNoteBlock(((NoteBlock) world.getBlockAt(x, y, z).getState()));
+                break;
+            default :
+                break;
         }
         return this;
     }
 
     private void checkBlockType() {
-        if (this.TypeID == Material.WOOD_STAIRS.getId() || this.TypeID == Material.COBBLESTONE_STAIRS.getId() || this.TypeID == Material.SMOOTH_STAIRS.getId() || this.TypeID == Material.BRICK_STAIRS.getId() || this.TypeID == Material.NETHER_BRICK_STAIRS.getId()) {
-            /** STAIRS */
-            this.blockType = EnumBlockType.STAIR;
-        } else if (this.TypeID == Material.PUMPKIN.getId() || this.TypeID == Material.JACK_O_LANTERN.getId()) {
-            /** PUMPKINS */
-            this.blockType = EnumBlockType.PUMPKIN;
-        } else if (this.TypeID == Material.LADDER.getId() || this.TypeID == Material.WALL_SIGN.getId() || this.TypeID == Material.FURNACE.getId() || this.TypeID == Material.BURNING_FURNACE.getId() || this.TypeID == Material.DISPENSER.getId() || this.TypeID == Material.CHEST.getId()) {
-            /** LADDER , WALLSIGN, FURNACE, CHEST, DISPENSER */
-            this.blockType = EnumBlockType.WALLSIGN;
-        } else if (this.TypeID == Material.RAILS.getId() || this.TypeID == Material.DETECTOR_RAIL.getId() || this.TypeID == Material.POWERED_RAIL.getId()) {
-            /** RAILS */
-            this.blockType = EnumBlockType.RAIL;
-        } else if (this.TypeID == Material.LEVER.getId() || this.TypeID == Material.STONE_BUTTON.getId()) {
-            /** LEVER , BUTTON */
-            this.blockType = EnumBlockType.BUTTON;
-        } else if (this.TypeID == Material.TORCH.getId() || this.TypeID == Material.REDSTONE_TORCH_ON.getId() || this.TypeID == Material.REDSTONE_TORCH_OFF.getId()) {
-            /** TORCHES */
-            this.blockType = EnumBlockType.TORCH;
+
+        Material mat = Material.matchMaterial(Integer.toString(TypeID));
+        switch (mat) {
+        // Stairs
+            case WOOD_STAIRS :
+            case COBBLESTONE_STAIRS :
+            case SMOOTH_STAIRS :
+            case BRICK_STAIRS :
+            case NETHER_BRICK_STAIRS :
+                this.blockType = EnumBlockType.STAIR;
+                break;
+
+            // Pumpkins
+            case PUMPKIN :
+            case JACK_O_LANTERN :
+                this.blockType = EnumBlockType.PUMPKIN;
+                break;
+
+            // Other stuff sticking together (GeMo has the clue)
+            case LADDER :
+            case WALL_SIGN :
+            case FURNACE :
+            case BURNING_FURNACE :
+            case DISPENSER :
+            case CHEST :
+                this.blockType = EnumBlockType.WALLSIGN;
+                break;
+
+            // Rails
+            case RAILS :
+            case DETECTOR_RAIL :
+            case POWERED_RAIL :
+                this.blockType = EnumBlockType.RAIL;
+                break;
+
+            // Interactable Buttons
+            case LEVER :
+            case STONE_BUTTON :
+                this.blockType = EnumBlockType.BUTTON;
+                break;
+
+            // Torches
+            case TORCH :
+            case REDSTONE_TORCH_ON :
+            case REDSTONE_TORCH_OFF :
+                this.blockType = EnumBlockType.TORCH;
+                break;
+
+            default :
+                // do nothing
         }
     }
-
     // ///////////////////////////////////
     //
     // ROTATE METHODS

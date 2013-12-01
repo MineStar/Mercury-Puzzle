@@ -20,7 +20,7 @@ public class InformationFurnace extends StructureInformation {
         this.cookTime = furnace.getCookTime();
         this.items = new HashMap<Integer, ItemStack>();
         for (int index = 0; index < furnace.getInventory().getSize(); index++) {
-            if (furnace.getInventory().getItem(index) == null || furnace.getInventory().getItem(index).getTypeId() == Material.AIR.getId()) {
+            if (furnace.getInventory().getItem(index) == null || furnace.getInventory().getItem(index).getType().equals(Material.AIR)) {
                 continue;
             }
             this.items.put(index, furnace.getInventory().getItem(index).clone());
@@ -29,7 +29,7 @@ public class InformationFurnace extends StructureInformation {
 
     @Override
     public void pasteInformation(Block block) {
-        if (block.getTypeId() != Material.FURNACE.getId() && block.getTypeId() != Material.BURNING_FURNACE.getId()) {
+        if (!block.getType().equals(Material.FURNACE) && !block.getType().equals(Material.BURNING_FURNACE)) {
             return;
         }
         for (Map.Entry<Integer, ItemStack> entry : this.items.entrySet()) {

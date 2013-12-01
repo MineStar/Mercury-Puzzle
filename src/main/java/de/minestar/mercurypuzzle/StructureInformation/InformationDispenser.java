@@ -18,7 +18,7 @@ public class InformationDispenser extends StructureInformation {
     public InformationDispenser(Inventory inventory) {
         this.items = new HashMap<Integer, ItemStack>();
         for (int index = 0; index < inventory.getSize(); index++) {
-            if (inventory.getItem(index) == null || inventory.getItem(index).getTypeId() == Material.AIR.getId()) {
+            if (inventory.getItem(index) == null || inventory.getItem(index).getType().equals(Material.AIR)) {
                 continue;
             }
             this.items.put(index, inventory.getItem(index).clone());
@@ -27,7 +27,7 @@ public class InformationDispenser extends StructureInformation {
 
     @Override
     public void pasteInformation(Block block) {
-        if (block.getTypeId() != Material.DISPENSER.getId()) {
+        if (!block.getType().equals(Material.DISPENSER)) {
             return;
         }
         for (Map.Entry<Integer, ItemStack> entry : this.items.entrySet()) {

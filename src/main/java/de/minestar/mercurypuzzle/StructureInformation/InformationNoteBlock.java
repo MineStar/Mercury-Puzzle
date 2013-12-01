@@ -17,7 +17,7 @@ public class InformationNoteBlock extends StructureInformation {
 
     @Override
     public void pasteInformation(Block block) {
-        if (block.getTypeId() != Material.NOTE_BLOCK.getId()) {
+        if (!block.getType().equals(Material.NOTE_BLOCK)) {
             return;
         }
         ((NoteBlock) block.getState()).setNote(this.note);

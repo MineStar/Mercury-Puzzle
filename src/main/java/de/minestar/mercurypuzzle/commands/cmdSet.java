@@ -69,7 +69,7 @@ public class cmdSet extends AbstractExtendedCommand {
             }
         }
 
-        Material material = Material.getMaterial(TypeID);
+        Material material = Material.matchMaterial(Integer.toString(TypeID));
         if (material == null) {
             PlayerUtils.sendError(player, "Material not found!");
             return;
